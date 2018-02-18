@@ -20,7 +20,7 @@ import eu.boehner.swing.datetimepicker.model.JDateTimePickerModel;
 import javax.swing.JButton;
 
 /**
- * This class represents the panel containing visible elements for the {@link JDateTimePicker}.
+ * This class represents the panel containing visible popup elements.
  * 
  * @author Daniel https://github.com/igitti/
  *
@@ -33,25 +33,25 @@ public class JDateTimePickerPanel extends JPanel {
 	private JButton headerNextButton;
 	
 	private JDateTimePickerModel dateTimePickerModel;
-	private JDateTimePickerDatePartPanel dateTimePickerDatePartPanel;
+	private JDateTimePickerSelectionPanel dateTimePickerSelectionPanel;
 	
 	public JDateTimePickerPanel(JDateTimePickerModel dateTimePickerModel, PropertyChangeListener valuePropertyChangeListener, PropertyChangeListener textPropertyChangeListener, PropertyChangeListener caretPropertyChangeListener) {
 		this.dateTimePickerModel = dateTimePickerModel;
 		initialize();
-		JDateTimePickerDatePartPanel dateTimePickerDatePartPanel = getDateTimePickerDatePartPanel();
+		JDateTimePickerSelectionPanel dateTimePickerSelectionPanel = getJDateTimePickerSelectionPanel();
 		if (valuePropertyChangeListener != null) {
-			dateTimePickerDatePartPanel.addPropertyChangeListener("value", valuePropertyChangeListener);
+			dateTimePickerSelectionPanel.addPropertyChangeListener("value", valuePropertyChangeListener);
 		}
 		if (textPropertyChangeListener != null) {
-			dateTimePickerDatePartPanel.addPropertyChangeListener("text", textPropertyChangeListener);
+			dateTimePickerSelectionPanel.addPropertyChangeListener("text", textPropertyChangeListener);
 		}
 		if (caretPropertyChangeListener != null) {
-			dateTimePickerDatePartPanel.addPropertyChangeListener("caret", caretPropertyChangeListener);
+			dateTimePickerSelectionPanel.addPropertyChangeListener("caret", caretPropertyChangeListener);
 		}
 	}
 	
 	public void carretEvent(int position) {
-		dateTimePickerDatePartPanel.carretEvent(position);
+		dateTimePickerSelectionPanel.carretEvent(position);
 	}
 
 	private void initialize() {
@@ -59,7 +59,7 @@ public class JDateTimePickerPanel extends JPanel {
 		setPreferredSize(new Dimension(240, 160));
 		setLayout(new BorderLayout(0, 0));
 		add(getHeaderPanel(), BorderLayout.NORTH);
-		add(getDateTimePickerDatePartPanel(), BorderLayout.CENTER);
+		add(getJDateTimePickerSelectionPanel(), BorderLayout.CENTER);
 	}
 	
 	private JPanel getHeaderPanel() {
@@ -77,12 +77,12 @@ public class JDateTimePickerPanel extends JPanel {
 	private JLabel getHeaderLabel() {
 		if (headerLabel == null) {
 			headerLabel = new JLabel();
-			headerLabel.setFocusable(false);
+			//headerLabel.setFocusable(false);
 			headerLabel.setHorizontalAlignment(SwingConstants.CENTER);
 			MouseListener mouseListener = new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					getDateTimePickerDatePartPanel().up();
+					getJDateTimePickerSelectionPanel().up();
 				}
 			};
 			headerLabel.addMouseListener(mouseListener);
@@ -94,11 +94,11 @@ public class JDateTimePickerPanel extends JPanel {
 	private JButton getHeaderPrevButton() {
 		if (headerPrevButton == null) {
 			headerPrevButton = new JButton("◄");
-			headerPrevButton.setFocusable(false);
+			//headerPrevButton.setFocusable(false);
 			headerPrevButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					getDateTimePickerDatePartPanel().previous();
+					getJDateTimePickerSelectionPanel().previous();
 				}
 			});
 		}
@@ -112,16 +112,16 @@ public class JDateTimePickerPanel extends JPanel {
 			headerNextButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					getDateTimePickerDatePartPanel().next();
+					getJDateTimePickerSelectionPanel().next();
 				}
 			});
 		}
 		return headerNextButton;
 	}
 
-	private JDateTimePickerDatePartPanel getDateTimePickerDatePartPanel() {
-		if (dateTimePickerDatePartPanel == null) {
-			dateTimePickerDatePartPanel = new JDateTimePickerDatePartPanel(dateTimePickerModel);
+	private JDateTimePickerSelectionPanel getJDateTimePickerSelectionPanel() {
+		if (dateTimePickerSelectionPanel == null) {
+			dateTimePickerSelectionPanel = new JDateTimePickerSelectionPanel(dateTimePickerModel);
 			
 			PropertyChangeListener propertyChangeListener = new PropertyChangeListener() {
 				@Override
@@ -129,8 +129,9 @@ public class JDateTimePickerPanel extends JPanel {
 					getHeaderLabel().setText(evt.getNewValue().toString());
 				}
 			};
-			dateTimePickerDatePartPanel.addPropertyChangeListener("header", propertyChangeListener);
+			dateTimePickerSelectionPanel.addPropertyChangeListener("header", propertyChangeListener);
 		}
-		return dateTimePickerDatePartPanel;
+		return dateTimePickerSelectionPanel;
 	}
+	
 }

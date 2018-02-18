@@ -16,18 +16,18 @@ import eu.boehner.swing.datetimepicker.model.JDateTimePickerModel;
 import eu.boehner.swing.datetimepicker.tablemodel.DateTimePickerTableModel;
 
 /**
- * This class represents the panel containing visible elements for direct choice of a date part.<br/>
+ * This class represents the panel containing visible elements for direct selection of a date part.<br/>
  * When a date part gets selected using the current DateTimePickerTableModel the DateTimePickerTableModel for the next part is activated.
  * 
  * @author Daniel https://github.com/igitti/
  */
-public class JDateTimePickerDatePartPanel extends JPanel {
+public class JDateTimePickerSelectionPanel extends JPanel {
 	
 	private JTable table;
 	private JDateTimePickerModel dateTimePickerModel;
 	private DateTimePickerTableModel currentDateTimePickerTableModel;
 		
-	public JDateTimePickerDatePartPanel(JDateTimePickerModel dateTimePickerModel) {
+	public JDateTimePickerSelectionPanel(JDateTimePickerModel dateTimePickerModel) {
 		this.dateTimePickerModel = dateTimePickerModel;
 		this.currentDateTimePickerTableModel = dateTimePickerModel.getDefaultDateTimePickerTableModel();
 		initialize();
@@ -37,9 +37,9 @@ public class JDateTimePickerDatePartPanel extends JPanel {
 		setLayout(new BorderLayout(0, 0));
 		add(getTable(), BorderLayout.CENTER);
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.SECOND, 0);
+		//calendar.set(Calendar.HOUR_OF_DAY, 0);
+		//calendar.set(Calendar.MINUTE, 0);
+		//calendar.set(Calendar.SECOND, 0);
 		currentDateTimePickerTableModel.setDate(calendar.getTime());
 	}
 
@@ -70,13 +70,14 @@ public class JDateTimePickerDatePartPanel extends JPanel {
 			DateTimePickerTableModel dateTimePickerTableModel = dateTimePickerModel.getNextDateTimePickerTableModel(currentDateTimePickerTableModel);
 			if (dateTimePickerTableModel == null) { //no next date part to select
 				firePropertyChange("value", null, date);
+				firePropertyChange("caret", null, dateTimePickerModel.getCaretPosition(currentDateTimePickerTableModel)); //reset caret to this date part
 			}
 			else { //next date part
 				currentDateTimePickerTableModel = dateTimePickerTableModel;
 				currentDateTimePickerTableModel.setDate(date);
-				firePropertyChange("header", null, currentDateTimePickerTableModel.getHeader());
+				firePropertyChange("header", null, dateTimePickerModel.getHeader(currentDateTimePickerTableModel, date));
 				firePropertyChange("value", null, date);
-				firePropertyChange("text", null, currentDateTimePickerTableModel.getText());
+				firePropertyChange("text", null, dateTimePickerModel.getText(currentDateTimePickerTableModel, date));
 				firePropertyChange("caret", null, dateTimePickerModel.getCaretPosition(currentDateTimePickerTableModel));
 				updateTableModel();
 			}
@@ -92,16 +93,20 @@ public class JDateTimePickerDatePartPanel extends JPanel {
 
 	public void previous() {
 		currentDateTimePickerTableModel.previous();
-		firePropertyChange("header", null, currentDateTimePickerTableModel.getHeader());
-		firePropertyChange("value", null, currentDateTimePickerTableModel.getDate());
-		firePropertyChange("text", null, currentDateTimePickerTableModel.getText());
+		Date date = currentDateTimePickerTableModel.getDate();
+		firePropertyChange("header", null, dateTimePickerModel.getHeader(currentDateTimePickerTableModel, date));
+		firePropertyChange("value", null, date);
+		firePropertyChange("text", null, dateTimePickerModel.getText(currentDateTimePickerTableModel, date));
+		firePropertyChange("caret", null, dateTimePickerModel.getCaretPosition(currentDateTimePickerTableModel));
 	}
 
 	public void next() {
 		currentDateTimePickerTableModel.next();
-		firePropertyChange("header", null, currentDateTimePickerTableModel.getHeader());
-		firePropertyChange("value", null, currentDateTimePickerTableModel.getDate());
-		firePropertyChange("text", null, currentDateTimePickerTableModel.getText());
+		Date date = currentDateTimePickerTableModel.getDate();
+		firePropertyChange("header", null, dateTimePickerModel.getHeader(currentDateTimePickerTableModel, date));
+		firePropertyChange("value", null, date);
+		firePropertyChange("text", null, dateTimePickerModel.getText(currentDateTimePickerTableModel, date));
+		firePropertyChange("caret", null, dateTimePickerModel.getCaretPosition(currentDateTimePickerTableModel));
 	}
 	
 	/** previous date part */
@@ -111,9 +116,10 @@ public class JDateTimePickerDatePartPanel extends JPanel {
 			Date date = currentDateTimePickerTableModel.getDate();
 			currentDateTimePickerTableModel = dateTimePickerTableModel;
 			currentDateTimePickerTableModel.setDate(date);
-			firePropertyChange("header", null, currentDateTimePickerTableModel.getHeader());
+			firePropertyChange("header", null, dateTimePickerModel.getHeader(currentDateTimePickerTableModel, date));
 			firePropertyChange("value", null, date);
-			firePropertyChange("text", null, currentDateTimePickerTableModel.getText());
+			firePropertyChange("text", null, dateTimePickerModel.getText(currentDateTimePickerTableModel, date));
+			firePropertyChange("caret", null, dateTimePickerModel.getCaretPosition(currentDateTimePickerTableModel));
 			updateTableModel();
 		}		
 	}
@@ -124,9 +130,9 @@ public class JDateTimePickerDatePartPanel extends JPanel {
 			Date date = currentDateTimePickerTableModel.getDate();
 			currentDateTimePickerTableModel = dateTimePickerTableModel;
 			currentDateTimePickerTableModel.setDate(date);
-			firePropertyChange("header", null, currentDateTimePickerTableModel.getHeader());
+			firePropertyChange("header", null, dateTimePickerModel.getHeader(currentDateTimePickerTableModel, date));
 			firePropertyChange("value", null, date);
-			firePropertyChange("text", null, currentDateTimePickerTableModel.getText());
+			firePropertyChange("text", null, dateTimePickerModel.getText(currentDateTimePickerTableModel, date));
 			updateTableModel();
 			
 		}

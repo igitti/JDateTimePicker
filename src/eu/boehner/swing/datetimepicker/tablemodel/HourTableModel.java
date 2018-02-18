@@ -2,7 +2,6 @@ package eu.boehner.swing.datetimepicker.tablemodel;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -23,8 +22,6 @@ public class HourTableModel extends DateTimePickerTableModel {
 
 	private static final int ROWS = 4;
 	private static final int COLS = 6;
-	private static final SimpleDateFormat HEADER_SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-	private static final SimpleDateFormat TEXT_SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //Set all parts to not force setting the rest
 
 	private TableCellRenderer tableCellRenderer;
 	private String[][] values = new String[ROWS][COLS];
@@ -57,29 +54,19 @@ public class HourTableModel extends DateTimePickerTableModel {
 		return values[rowIndex][columnIndex];
 	}
 	
-
 	@Override
 	protected void render() {
 		Calendar calendar = (Calendar)this.calendar.clone();
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		int hour = 0; 
 		for (int i = 0; i < ROWS; i++) {
 			for (int j = 0; j < COLS; j ++) {
+				calendar.set(Calendar.HOUR_OF_DAY, hour); //not calendar.add(Calendar.HOUR_OF_DAY, 1); because of daylight saving time one hour to be displayed is skipped/duplicated
 				values[i][j] = String.valueOf(calendar.get(Calendar.HOUR_OF_DAY));
 				dates[i][j] = calendar.getTime();
-				calendar.add(Calendar.HOUR_OF_DAY, 1);
+				hour++;
 			}
 		}
 		fireTableDataChanged();
-	}
-
-	@Override
-	public String getHeader() {
-		return HEADER_SIMPLE_DATE_FORMAT.format(calendar.getTime());
-	}
-
-	@Override
-	public String getText() {
-		return TEXT_SIMPLE_DATE_FORMAT.format(calendar.getTime());
 	}
 
 	@Override

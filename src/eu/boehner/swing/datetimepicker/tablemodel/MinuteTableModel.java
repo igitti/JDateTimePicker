@@ -2,7 +2,6 @@ package eu.boehner.swing.datetimepicker.tablemodel;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -23,8 +22,6 @@ public class MinuteTableModel extends DateTimePickerTableModel {
 
 	private static final int ROWS = 6;
 	private static final int COLS = 10;
-	private static final SimpleDateFormat HEADER_SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:");
-	private static final SimpleDateFormat TEXT_SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //Set all parts to not force setting the rest
 
 	private TableCellRenderer tableCellRenderer;
 	private String[][] values = new String[ROWS][COLS];
@@ -72,16 +69,6 @@ public class MinuteTableModel extends DateTimePickerTableModel {
 		fireTableDataChanged();
 	}
 	
-	@Override
-	public String getHeader() {
-		return HEADER_SIMPLE_DATE_FORMAT.format(calendar.getTime());
-	}
-
-	@Override
-	public String getText() {
-		return TEXT_SIMPLE_DATE_FORMAT.format(calendar.getTime());
-	}
-
 	@Override
 	public int getRowHeight() {
 		return 20;

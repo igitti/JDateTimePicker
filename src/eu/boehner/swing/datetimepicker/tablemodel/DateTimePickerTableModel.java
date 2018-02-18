@@ -7,9 +7,9 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 
 /**
- * A TableModel is used for selecting a date part.<br/>
+ * A DateTimePickerTableModel defines a display and selection model of a date part.<br/>
  * Date part can be year, month, etc.
- * When one part is selected (using a DateTimePickerTableModel) the value is obtained by calling {@link #getDate(int, int)}
+ * When one part is selected the value is obtained by calling {@link #getDate(int, int)}
  * and has to be passed to the DateTimePickerTableModel for the next part by {@link #setDate(Date)}.
  * 
  * @author Daniel https://github.com/igitti/
@@ -35,22 +35,9 @@ public abstract class DateTimePickerTableModel extends AbstractTableModel {
 	/** Calculate eveything needed for being used as TableModel */
 	protected abstract void render();
 
-	/**
-	 * A string representation of "where you are".<br/>
-	 * Typically the more significant parts, e. g. year and month when selecting the day.<br/>
-	 * */
-	public abstract String getHeader();
-	
-	/**
-	 * A string representation of what is already selected.<br/>
-	 * Typically the more significant parts, e. g. year and month when selecting the day
-	 * The differnce to {@link #getHeader()} is that here delimiters for the next part should be added, e. g. a colon after hours
-	 * */
-	public abstract String getText();
-	
 	public abstract int getRowHeight();
 	
-	/** Return a date where the date part is set corresponding to selection */
+	/** Returns a date where the date part is set corresponding to selection */
 	public abstract Date getDate(int row, int col);
 	
 	/**

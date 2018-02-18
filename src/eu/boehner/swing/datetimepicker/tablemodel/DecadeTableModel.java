@@ -96,17 +96,6 @@ public class DecadeTableModel extends DateTimePickerTableModel {
 	}
 
 	@Override
-	public String getHeader() {
-		int beginOfCentrury = calendar.get(Calendar.YEAR);
-		return beginOfCentrury + " - " + (beginOfCentrury + 99);
-	}
-
-	@Override
-	public String getText() {
-		return String.valueOf(calendar.get(Calendar.YEAR) / 100);
-	}
-
-	@Override
 	public int getRowHeight() {
 		return 40;
 	}

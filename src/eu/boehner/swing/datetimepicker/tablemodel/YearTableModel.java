@@ -90,16 +90,6 @@ public class YearTableModel extends DateTimePickerTableModel {
 	}
 
 	@Override
-	public String getHeader() {
-		return getText() + "_";
-	}
-
-	@Override
-	public String getText() {
-		return String.valueOf(calendar.get(Calendar.YEAR) / 10);
-	}
-
-	@Override
 	public int getRowHeight() {
 		return 40;
 	}

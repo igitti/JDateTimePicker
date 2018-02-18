@@ -3,7 +3,6 @@ package eu.boehner.swing.datetimepicker.tablemodel;
 import java.awt.Color;
 import java.awt.Component;
 import java.text.DateFormatSymbols;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -23,8 +22,6 @@ public class DayTableModel extends DateTimePickerTableModel {
 
 	private static final int ROWS = 6;
 	private static final int COLS = 7;
-	private static final SimpleDateFormat HEADER_SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-");
-	private static final SimpleDateFormat TEXT_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-");
 	private static final String[] WEEKDAYS = new DateFormatSymbols().getShortWeekdays();
 
 	private TableCellRenderer tableCellRenderer;
@@ -99,16 +96,6 @@ public class DayTableModel extends DateTimePickerTableModel {
 		fireTableDataChanged();
 	}
 	
-	@Override
-	public String getHeader() {
-		return HEADER_SIMPLE_DATE_FORMAT.format(calendar.getTime());
-	}
-
-	@Override
-	public String getText() {
-		return TEXT_DATE_FORMAT.format(calendar.getTime());
-	}
-
 	@Override
 	public int getRowHeight() {
 		return 19;

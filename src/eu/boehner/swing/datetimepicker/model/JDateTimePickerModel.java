@@ -1,13 +1,14 @@
 package eu.boehner.swing.datetimepicker.model;
 
 import java.text.Format;
+import java.util.Date;
 
 import eu.boehner.swing.datetimepicker.JDateTimePicker;
 import eu.boehner.swing.datetimepicker.tablemodel.DateTimePickerTableModel;
 
 /**
- * A JDateTimePickerModel represents an input and display model for a {@link JDateTimePicker}.<br/>
- * It defines the format and an order of date parts to be selected. Date parts are {@link DateTimePickerTableModel}s.
+ * A JDateTimePickerModel represents an input and a display model for a {@link JDateTimePicker}.<br/>
+ * It defines format and order of date parts to be selected. Date parts are {@link DateTimePickerTableModel}s.
  * It is quite important to go from a significant to less significant part.
  * 
  * @author Daniel https://github.com/igitti/
@@ -41,4 +42,17 @@ public interface JDateTimePickerModel {
 	/** Returns a {@link CaretPosition} correspondig to a DateTimePickerTableModel in this format. */
 	public CaretPosition getCaretPosition(DateTimePickerTableModel dateTimePickerTableModel);
 
+	/**
+	 * A string representation of the date parts that have been selected to this DateTimePickerTableModel.<br/>
+	 * E. g. year and month when selecting the day.
+	 * */
+	public abstract String getHeader(DateTimePickerTableModel dateTimePickerTableModel, Date date);
+	
+	/**
+	 * A string representation of the date parts that have been selected to this DateTimePickerTableModel.<br/>
+	 * E. g. year and month when selecting the day
+	 * The differnce to {@link #getHeader()} is that here delimiters for the next part should be added, e. g. a colon after hours
+	 * */
+	public abstract String getText(DateTimePickerTableModel dateTimePickerTableModel, Date date);
+	
 }

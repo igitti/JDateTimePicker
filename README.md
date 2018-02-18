@@ -7,7 +7,7 @@ It is a JFormattedTextField showing a popup window for selecting date/time by cl
 ## Getting Started
 
 ```Java
-new JDateTimePicker(new JDateTimePickerYearToSecondModel());
+new JDateTimePicker(new DecadeYearMonthDayHourMinuteSecondModel());
 ```
 
 ## License

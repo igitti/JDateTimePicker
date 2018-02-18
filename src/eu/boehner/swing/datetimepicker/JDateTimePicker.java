@@ -19,8 +19,7 @@ import eu.boehner.swing.datetimepicker.model.JDateTimePickerModel;
 /**
  * A JDataTimePicker is a {@link JFormattedTextField} showing a popup window for selecting
  * date/time by clicking or touching.<br/>
- * Selecting is organized from most significant part (e. g. year) to least significant part (e. g. second). When a
- * selection is made (e. g. year) the next part is activated and gets ready for selection (e. g. month).
+ * When a selection is made (e. g. year) the next part is activated and gets ready for selection (e. g. month).
  * 
  * @author Daniel https://github.com/igitti/
  */
@@ -34,6 +33,7 @@ public class JDateTimePicker extends JFormattedTextField {
 	public JDateTimePicker(JDateTimePickerModel dateTimePickerModel) {
 		super(dateTimePickerModel.getFormat());
 		this.dateTimePickerModel = dateTimePickerModel;
+		
 		final PropertyChangeListener valuePropertyChangeListener = new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
@@ -47,6 +47,7 @@ public class JDateTimePicker extends JFormattedTextField {
 				}
 			}
 		};
+		
 		final PropertyChangeListener textPropertyChangeListener = new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
